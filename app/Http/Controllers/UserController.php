@@ -14,7 +14,7 @@ class UserController extends Controller
         $user->name = $req->input("name");
         $user->role = $req->input("role");
         $user->email = $req->input("email");
-        $user->password = Hash::make($req->input("password"));
+        $user->password = Hash::make($req->input("pass"));
         $user->save();
         return $user;
        
@@ -22,11 +22,16 @@ class UserController extends Controller
     function  login(Request $req) 
     {
         $user = User::where('email', $req->email)->first(); 
-        if(!$user || !Hash::check($req->password,$user->password))
+        if(!$user || !Hash::check($req->pass,$user->password))
         {
-            return ["error"=>"Credentials did not match any of our records "];
+             
+             return ["error"=>"Credentials did not match any of our records "];
+            
         }
-       
         return $user;
+       
+        
+        
+       
     }
 }
